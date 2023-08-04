@@ -4,6 +4,7 @@ import com.lms.lms.components.MailComponents;
 import com.lms.lms.member.entity.Member;
 import com.lms.lms.member.exception.MemberNotEmailAuthException;
 import com.lms.lms.member.model.MemberInput;
+import com.lms.lms.member.model.ResetPasswordInput;
 import com.lms.lms.member.repository.MemberRepository;
 import com.lms.lms.member.service.MemberService;
 import java.time.LocalDateTime;
@@ -41,7 +42,7 @@ public class MemberServiceImpl implements MemberService {
 
         Member member = Member.builder()
             .userId(parameter.getUserId())
-            .userName(parameter.getUserId())
+            .userName(parameter.getUserName())
             .phone(parameter.getPhone())
             .password(encPassword)
             .regDt(LocalDateTime.now())
@@ -54,7 +55,7 @@ public class MemberServiceImpl implements MemberService {
         String email = parameter.getUserId();
         String subject = "LMS 사이트 가입을 축하드립니다.";
         String text = "<p>LMS 사이트 가입을 축하드립니다.</p> <p>아래 링크를 클릭하셔서 가입을 완료 하세요.</p>"
-            + "<div><a href='http://localhost:8080/member/email-auth?id=" + uuid+ "'> 가입 완료 </a></div>";
+            + "<div><a target='_blank' href='http://localhost:8080/member/email-auth?id=" + uuid+ "'> 가입 완료 </a></div>";
         mailComponents.sendMail(email, subject, text);
 
         return true;
@@ -73,6 +74,81 @@ public class MemberServiceImpl implements MemberService {
         member.setEmailAuthYn(true);
         member.setEmailAuthDt(LocalDateTime.now());
         memberRepository.save(member);
+
+        return true;
+    }
+
+    @Override
+    public boolean sendResetPassword(ResetPasswordInput parameter) {
+        Optional<Member> optionalMember =
+            memberRepository.findByUserIdAndUserName(parameter.getUserId(), parameter.getUserName());
+
+        if(optionalMember.isEmpty()) {
+            throw new UsernameNotFoundException("회원 정보가 존재하지 않습니다.");
+        }
+
+        Member member = optionalMember.get();
+        String uuid = UUID.randomUUID().toString();
+
+        member.setResetPasswordKey(uuid);
+        member.setResetPasswordLimitDt(LocalDateTime.now().plusDays(1));
+        memberRepository.save(member);
+
+        String email = parameter.getUserId();
+        String subject = "[LMS] 비밀번호 초기화 메일입니다.";
+        String text = "<p>LMS 비밀번호 초기화 메일입니다.</p> <p>아래 링크를 클릭하셔서 비밀번호를 초기화 해주세요.</p>"
+            + "<div><a target='_blank' href='http://localhost:8080/member/reset/password?id=" + uuid+ "'> 비밀번호 초기화 링크 </a></div>";
+        mailComponents.sendMail(email, subject, text);
+
+        return false;
+    }
+
+    @Override
+    public boolean resetPassword(String uuid, String password) {
+        Optional<Member> optionalMember =
+            memberRepository.findByResetPasswordKey(uuid);
+
+        if(optionalMember.isEmpty()) {
+            throw new UsernameNotFoundException("회원 정보가 존재하지 않습니다.");
+        }
+
+        Member member = optionalMember.get();
+
+        if (member.getResetPasswordLimitDt() == null) {
+            throw new RuntimeException("유효한 날짜가 아닙니다.");
+        }
+
+        if (member.getResetPasswordLimitDt().isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("유효한 날짜가 아닙니다.");
+        }
+
+        String encPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+        member.setPassword(encPassword);
+        member.setResetPasswordKey("");
+        member.setResetPasswordLimitDt(null);
+        memberRepository.save(member);
+
+        return true;
+    }
+
+    @Override
+    public boolean checkResetPassword(String uuid) {
+        Optional<Member> optionalMember =
+            memberRepository.findByResetPasswordKey(uuid);
+
+        if(optionalMember.isEmpty()) {
+            return false;
+        }
+
+        Member member = optionalMember.get();
+
+        if (member.getResetPasswordLimitDt() == null) {
+            throw new RuntimeException("유효한 날짜가 아닙니다.");
+        }
+
+        if (member.getResetPasswordLimitDt().isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("유효한 날짜가 아닙니다.");
+        }
 
         return true;
     }
