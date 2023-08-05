@@ -3,16 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <title>회원 가입</title>
+  <div th:replace="/fragment/header.html :: fragment-header"></div>
 </head>
 
 <body>
 
   <div th:if="${result}">
+    <div th:replace="/fragment/layout.html :: fragment-nav"></div>
     <h1>회원 가입 완료</h1>
     <p>회원 가입이 완료되었습니다.</p>
   </div>
 
   <div th:if="${result eq false}">
+    <div th:replace="/fragment/layout.html :: fragment-nav"></div>
     <h1>회원 가입 결과</h1>
     <p>회원 가입에 실패하였습니다.</p>
   </div>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>회원 로그인</title>
+  <div th:replace="/fragment/header.html :: fragment-header"></div>
+</head>
+<body>
+
+  <div th:replace="/fragment/layout.html :: fragment-nav"></div>
+
+  <div id="textH1">
+  <h1>회원 로그인</h1>
+  </div>
+
+  <div th:text="${errorMessage}">
+  </div>
+
+  <form method="post">
+
+    <div id="form-container">
+
+        <input class="form-control" type="text" name="username" placeholder="아이디(이메일)을 입력" required/>
+
+        <input class="form-control"  type="password" name="password" placeholder="비밀번호 입력" required/>
+
+    </div>
+
+    <div >
+      <button  id="btnSubmit" class="btn btn-primary" type="submit">로그인</button>
+    </div>
+
+  </form>
+
+  <div id="link">
+    <a href="/member/find/password">비밀번호 찾기</a>
+  </div>
+
+</body>
+</html>

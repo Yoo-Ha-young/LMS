@@ -3,10 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>회원 활성화</title>
+  <div th:replace="/fragment/header.html :: fragment-header"></div>
 </head>
 <body>
 
   <h1>회원 활성화</h1>
+  <div th:replace="/fragment/layout.html :: fragment-nav"></div>
+  <hr/>
 
   <div th:if="${result eq true}">
     <p>회원님의 계정이 활성화 되었습니다.</p>
