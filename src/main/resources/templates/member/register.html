@@ -3,33 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <title>회원가입</title>
+  <div th:replace="/fragment/header.html :: fragment-header"></div>
 </head>
 <body>
-  <h1>회원가입</h1>
-  <div th:replace="/fragment/layout.html :: fragment-body-menu"></div>
-  <hr/>
 
-  <form method="post">
-    <div>
-      <input type="email" name="userId" placeholder="아이디(이메일) 입력" required />
-    </div>
-    <div>
-      <input type="text" name="userName" placeholder="이름 입력" required />
-    </div>
-    <div>
-      <input type="password" name="password" placeholder="비밀번호 입력" required />
-    </div>
-    <div>
-      <input type="password" placeholder="확인 비밀번호 입력" required />
-    </div>
-    <div>
-      <input type="tel" name="phone" placeholder="전화번호 입력" required />
-    </div>
-    <div>
-      <button>회원 가입 하기</button>
-    </div>
-  </form>
+<div th:replace="/fragment/layout.html :: fragment-nav"></div>
+<div id="textH1">
 
+  <h1>회원 가입</h1>
+
+</div>
+
+<form method="post">
+  <div id="form-container">
+    <input class="form-control" type="email" name="userId" placeholder="아이디(이메일) 입력" required/>
+    <input class="form-control" type="text" name="userName" placeholder="이름 입력" required/>
+    <input class="form-control" type="password" name="password" placeholder="비밀번호 입력" required/>
+    <input class="form-control" type="password" placeholder="확인 비밀번호 입력" required/>
+    <input class="form-control" type="tel" name="phone" placeholder="전화번호 입력" required/>
+  </div>
+
+  <div>
+    <button id="btnSubmit" class="btn btn-primary" type="submit">회원 가입 하기</button>
+  </div>
+</form>
 
 
 </body>

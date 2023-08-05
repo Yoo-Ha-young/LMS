@@ -14,12 +14,14 @@ public class MainController {
     @RequestMapping("/")
     public String index() {
 
-//        String email = "bluekitten74@naver.com";
-//        String subject = "안녕하세요";
-//        String text = "<p>안녕하세요.</p><p>반값습니다.</p>";
-//        mailComponents.sendMail(email, subject, text);
-
         return "index";
+    }
+
+
+    @RequestMapping("/error/denied")
+    public String errorDenied() {
+
+        return "error/denied";
     }
 
 }

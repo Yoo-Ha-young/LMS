@@ -44,6 +44,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
              "/member/find/password")
             .permitAll();
 
+        http.authorizeRequests()
+                .antMatchers("/admin/**")
+                    .hasAuthority("ROLE_ADMIN");
+
         http.formLogin()
             .loginPage("/member/login")
             .failureHandler(getFailureHandler())
@@ -53,6 +57,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
             .logoutSuccessUrl("/")
             .invalidateHttpSession(true); // 로그아웃 후 세션 초기화
+
+        http.exceptionHandling()
+            .accessDeniedPage("/error/denied");
 
         super.configure(http);
     }
