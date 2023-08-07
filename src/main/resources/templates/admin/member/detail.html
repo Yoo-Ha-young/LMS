@@ -6,26 +6,24 @@
   <div th:replace="/fragment/header.html :: fragment-header"></div>
 
   <style>
-    .detail table {
-      width: 100%;
-      border-collapse: collapse;
-    }
+    /*.detail table {*/
+    /*  width: 100%;*/
+    /*  border-collapse: collapse;*/
+    /*}*/
 
-    .detail table th, .detail table td {
-      border: solid 1px #000;
-    }
+    /*.detail table th, .detail table td {*/
+    /*  border: solid 1px #000;*/
+    /*}*/
   </style>
 
 
 </head>
 <body>
-
-<h1>관리자 회원 관리 - 회원 상세 정보</h1>
 <div th:replace="/fragment/layout.html :: fragment-admin-body-menu"></div>
-
+<h1>관리자 회원 관리 - 회원 상세 정보</h1>
 <div class="detail">
 
-  <table>
+  <table style="text-align: center" class="table table-striped table-sm">
     <tbody>
 
     <tr>
@@ -111,7 +109,7 @@
   </table>
 
 
-  <div>
+  <div id="link">
     <a href="list.do">목록</a>
   </div>
 

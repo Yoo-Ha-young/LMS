@@ -28,13 +28,13 @@ public class MemberController {
         return "member/login";
     }
 
-    @GetMapping("/member/find-password")
+    @GetMapping("/member/find/password")
     public String findPassword() {
 
         return "member/find_password";
     }
 
-    @PostMapping("/member/find-password")
+    @PostMapping("/member/find/password")
     public String findPasswordSubmit(Model model, ResetPasswordInput parameter) {
 
         boolean result = memberService.sendResetPassword(parameter);

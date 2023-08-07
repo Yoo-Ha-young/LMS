@@ -5,24 +5,16 @@
   <title>관리자 화면 </title>
   <div th:replace="/fragment/header.html :: fragment-header"></div>
   <style>
-    .list table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    .list table th, .list table td {
-      border:solid 1px #000;
+    /* Flexbox 레이아웃을 위한 스타일 */
+    .flex-container {
+      display: flex;
+      align-items: center; /* 요소들을 세로로 정렬 */
+      padding: 10px;
     }
 
-    .search-form {
-      position: relative;
-      padding: 5px 0 10px 0;
-      text-align: right;
-    }
-    .search-form .total-count {
-      position: absolute;
-      left: 0; top: 0;
-      height: 20px;
-      float: left;
+    /* total-count가 왼쪽에 위치하도록 스타일 */
+    #total-count {
+      margin-right: auto; /* 나머지 요소들을 오른쪽으로 밀어냄 */
     }
 
     .pager {
@@ -31,33 +23,36 @@
     }
     .pager a.on {
       font-weight: bold;
-      color: red;
+      color: #043fa8;
     }
   </style>
 </head>
 <body>
 
-<h1>관리자 회원 관리</h1>
-<div th:replace="/fragment/layout.html :: fragment-admin-body-menu"></div>
 
+<div th:replace="/fragment/layout.html :: fragment-admin-body-menu"></div>
+<h1>관리자 회원 관리</h1>
 <div class="list">
 
-  <div class="search-form">
-    <p class="total-count">전체 <span th:text="${totalCount}"></span>개</p>
 
-    <form method="get">
-      <select name="searchType">
+  <div class="flex-container">
+    <p id="total-count">전체 <span th:text="${totalCount}"></span>개</p>
+    <form method="get" class="form-inline">
+      <select name="searchType" class="form-select btn-outline-primary" aria-label="Default select example">
         <option value="all">전체</option>
         <option th:selected="${#strings.equals(param.searchType, 'userId')}" value="userId">아이디</option>
         <option th:selected="${#strings.equals(param.searchType, 'userName')}" value="userName">이름</option>
         <option th:selected="${#strings.equals(param.searchType, 'phone')}" value="phone">연락처</option>
+
       </select>
-      <input th:value="${param.searchValue}" type="sear" name="searchValue" placeholder="검색어 입력"/>
-      <button type="submit">검색</button>
+      <div style="padding: 3px">
+        <input th:value="${param.searchValue}" class="form-control mr-sm-2" type="search" name="searchValue" placeholder="검색어 입력"  aria-label="Search"/>
+        <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+      </div>
     </form>
   </div>
 
-  <table>
+  <table style="text-align: center" class="table table-striped table-sm" >
     <thead>
     <tr>
       <th>NO</th>
