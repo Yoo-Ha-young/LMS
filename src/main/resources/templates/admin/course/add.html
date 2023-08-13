@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>강좌 관리 화면 </title>
+  <div th:replace="/fragment/header.html :: fragment-header"></div>
+
+  <style>
+    select.form-control {
+      text-align: center; /* 수평 가운데 정렬 */
+      width: 300px;
+    }
+
+    /* 위에서 언급한 input 요소의 너비 설정 */
+    input.form-control {
+      text-align: center; /* 수평 가운데 정렬 */
+      width: 300px;
+    }
+
+    td.centered-td {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+  </style>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+          integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+          crossorigin="anonymous"></script>
+
+</head>
+<body>
+<div th:replace="/fragment/layout.html :: fragment-admin-body-menu"></div>
+<h1> 강좌 관리 - 강좌 등록</h1>
+
+<div class="detail">
+  <form method="post">
+
+    <table style="text-align: center" class="table table-striped table-sm">
+      <tbody>
+      <tr>
+        <th>강좌 카테고리</th>
+        <td class="centered-td">
+          <select  class="btn btn-secondary dropdown-toggle form-control" aria-label=".form-select-lg example" required>
+            <option value="">카테고리 선택</option>
+            <option
+                th:selected="${detail.categoryId == x.id}"
+                th:each="x:${category}" th:value="${x.id}" th:text="${x.categoryName}">기획
+            </option>
+          </select>
+        </td>
+      </tr>
+
+      <tr>
+        <th>강좌명</th>
+        <td class="centered-td">
+          <input th:value="${detail.subject}" class="form-control" type="text" name="subject" required
+                 placeholder="강좌명 입력">
+        </td>
+      </tr>
+
+      <tr>
+        <th>키워드</th>
+        <td class="centered-td">
+          <input th:value="${detail.keyword}" class="form-control" type="text" name="keyword" required
+                 placeholder="키워드 입력">
+        </td>
+      </tr>
+
+      <tr>
+        <th>요약문구</th>
+        <td class="centered-td">
+          <textarea th:text="${detail.summary}" class="form-control" type="text" name="summary" required
+                    style="width: 300px; text-align: center;"     placeholder="요약문구 입력"></textarea>
+        </td>
+      </tr>
+
+      <tr>
+        <th>내용</th>
+        <td class="centered-td">
+          <textarea th:text="${detail.contents}" class="form-control" type="text" name="contents" required
+                    style="width: 300px; text-align: center;"    placeholder="내용 입력"></textarea>
+        </td>
+      </tr>
+
+      <tr>
+        <th>정가</th>
+        <td class="centered-td">
+          <input th:value="${detail.price}" class="form-control" type="text" name="price" required
+                 placeholder="정가 입력">
+        </td>
+      </tr>
+
+      <tr>
+        <th>판매가</th>
+        <td class="centered-td">
+          <input th:value="${detail.salePrice}" class="form-control" type="text" name="salePrice" required
+                 placeholder="판매가 입력">
+        </td>
+      </tr>
+
+      <tr>
+        <th>할인 종료일</th>
+        <td class="centered-td">
+          <input th:value="${detail.saleEndDt}" type="text" name="saleEndDtText" required
+                 class="form-control" placeholder="할인 종료일 입력">
+        </td>
+      </tr>
+
+
+      </tbody>
+    </table>
+
+    <div style="text-align: center">
+      <button th:if="${editMode}" class="btn btn-primary my-2 my-sm-0" type="submit">강좌 수정 하기
+      </button>
+      <button th:if="${!editMode}" class="btn btn-primary my-2 my-sm-0" type="submit">강좌 등록 하기
+      </button>
+      <a class="btn btn-primary my-2 my-sm-0" href="/admin/course/list.do">목록 이동 </a>
+    </div>
+  </form>
+</div>
+
+
+</body>
+</html>

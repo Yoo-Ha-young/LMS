@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>에러 페이지</title>
+  <div th:replace="/fragment/header.html :: fragment-header"></div>
+</head>
+<body>
+<h1>에러 페이지</h1>
+<p th:text="${message}"></p>
+
+<div>
+  <a href="/">홈으로 이동</a>
+</div>
+</body>
+</html>

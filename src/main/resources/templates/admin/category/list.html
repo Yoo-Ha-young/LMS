@@ -81,7 +81,6 @@
     </form>
   </div>
 
-
   <table style="text-align: center" class="table table-striped table-sm">
     <thead>
     <tr>
@@ -102,6 +101,7 @@
     </thead>
     <tbody>
     <tr th:each="x : ${list}">
+
       <td th:text="${x.id}">
         <input type="hidden" name="id" th:value="${x.id}"/>
         <p th:text="${x.id}">1</p>
@@ -116,6 +116,8 @@
         <input th:checked="${x.usingYn}" type="checkbox" th:id="'usingYn_' + ${x.id}" th:name="'usingYn_' + ${x.id}" value="true"/>
         <label th:for="'usingYn_' + ${x.id}">사용</label>
       </td>
+
+
       <td>
         <div class="inline-div">
           <button class="update-button btn btn-outline-dark" type="button">수정</button>
@@ -127,6 +129,8 @@
           </form>
         </div>
       </td>
+
+
     </tr>
     <tr th:if="${#lists.size(list) < 1}">
       <td colspan="5" >

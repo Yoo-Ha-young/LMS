@@ -7,6 +7,7 @@ import com.lms.lms.admin.model.MemberParam;
 
 import com.lms.lms.member.service.MemberService;
 
+import com.lms.lms.util.PageUtil;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -32,8 +33,8 @@ public class AdminMemberController extends BaseController {
             totalCount = members.get(0).getTotalCount();
         }
         String queryString = parameter.getQueryString();
-        String pagerHtml = getPaperHtml(totalCount, parameter.getPageSize(), parameter.getPageIndex(), queryString);
-
+        String pagerHtml = getPaperHtml(totalCount, parameter.getPageSize(),
+            parameter.getPageIndex(), queryString);
         model.addAttribute("list", members);
         model.addAttribute("totalCount", totalCount);
         model.addAttribute("pager", pagerHtml);
